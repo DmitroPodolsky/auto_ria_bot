@@ -29,9 +29,7 @@ class WebUrls:
         while True:
             self.url = self.customize_url(self.url)
             soup = self.get_soup()
-            row_urls = soup.find_all(
-                "div", class_="item ticket-title"
-            )
+            row_urls = soup.find_all("div", class_="item ticket-title")
 
             if len(row_urls) == 0:
                 logger.info(f"Found {len(urls)} urls")

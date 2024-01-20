@@ -1,7 +1,9 @@
-
 import sqlite3
+
 from loguru import logger
+
 from bot.config import settings
+
 
 class Manager:
     """Class for managing database connection and data"""
@@ -50,7 +52,7 @@ class Manager:
         cursor.close()
 
         logger.info("Data inserted")
-        
+
     def select_data(self) -> list[tuple]:
         """Select data from table
         :return: list of tuples with data"""
@@ -63,19 +65,21 @@ class Manager:
         logger.info("Data selected")
 
         return data
-    
+
     def delete_data(self, data: list[tuple]) -> None:
         """Delete data from table
         :param data: list of tuples with data
         """
         data = [(url[0],) for url in data]
         cursor = self.connection.cursor()
-        cursor.executemany("DELETE FROM car_data WHERE url=?", data) # TODO check if it works
+        cursor.executemany(
+            "DELETE FROM car_data WHERE url=?", data
+        )  # TODO check if it works
         self.connection.commit()
         cursor.close()
-        
+
         logger.info("Data deleted")
-        
+
     def change_price_data(self, data: list[tuple]) -> None:
         """Update data in table
         :param data: list of tuples with data
@@ -85,5 +89,5 @@ class Manager:
         cursor.executemany("UPDATE car_data SET price_usd=? WHERE url=?", data)
         self.connection.commit()
         cursor.close()
-        
+
         logger.info("Data updated")
